@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mindoc,文档管理," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写在前面的话每篇一句行百里者半九十    你是否有N个内网系统，各种环境：生产、灾备、测试，系统越来越多，你只能靠你的小本本记录，同事也是常互相询问所管理的系统访问地址。作为运维的你,开发的一些自动化脚本，你想同事在你休假的时候明白其调用方法。你总结的文章想共享在内部系统。那么你可以尝试下mindoc这个工具。 MinDoc 简介下面这段介绍来源于搭建好mindoc 创建的普通文档模版  MinD">
+<meta name="keywords" content="mindoc,文档管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mindoc 文档管理系统搭建">
+<meta property="og:url" content="https://shanguanyunya.github.io/2017/10/20/mindoc-build/index.html">
+<meta property="og:site_name" content="上官云涯&#39;s blog">
+<meta property="og:description" content="写在前面的话每篇一句行百里者半九十    你是否有N个内网系统，各种环境：生产、灾备、测试，系统越来越多，你只能靠你的小本本记录，同事也是常互相询问所管理的系统访问地址。作为运维的你,开发的一些自动化脚本，你想同事在你休假的时候明白其调用方法。你总结的文章想共享在内部系统。那么你可以尝试下mindoc这个工具。 MinDoc 简介下面这段介绍来源于搭建好mindoc 创建的普通文档模版  MinD">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/mindoc.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/wkhtmltopdf.png">
+<meta property="og:updated_time" content="2017-10-20T14:18:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mindoc 文档管理系统搭建">
+<meta name="twitter:description" content="写在前面的话每篇一句行百里者半九十    你是否有N个内网系统，各种环境：生产、灾备、测试，系统越来越多，你只能靠你的小本本记录，同事也是常互相询问所管理的系统访问地址。作为运维的你,开发的一些自动化脚本，你想同事在你休假的时候明白其调用方法。你总结的文章想共享在内部系统。那么你可以尝试下mindoc这个工具。 MinDoc 简介下面这段介绍来源于搭建好mindoc 创建的普通文档模版  MinD">
+<meta name="twitter:image" content="http://oy2fglccv.bkt.clouddn.com/mindoc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://shanguanyunya.github.io/2017/10/20/mindoc-build/"/>
+
+
+
+
+
+  <title>mindoc 文档管理系统搭建 | 上官云涯's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">上官云涯's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shanguanyunya.github.io/2017/10/20/mindoc-build/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="上官云涯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上官云涯's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mindoc 文档管理系统搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-20T22:18:16+08:00">
+                2017-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/20/mindoc-build/" class="leancloud_visitors" data-flag-title="mindoc 文档管理系统搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,168 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h1><h2 id="每篇一句"><a href="#每篇一句" class="headerlink" title="每篇一句"></a>每篇一句</h2><p><strong>行百里者半九十</strong></p>
+<p>   你是否有N个内网系统，各种环境：生产、灾备、测试，系统越来越多，你只能靠你的小本本记录，同事也是常互相询问所管理的系统访问地址。作为运维的你,开发的一些自动化脚本，你想同事在你休假的时候明白其调用方法。你总结的文章想共享在内部系统。那么你可以尝试下mindoc这个工具。</p>
+<h1 id="MinDoc-简介"><a href="#MinDoc-简介" class="headerlink" title="MinDoc 简介"></a>MinDoc 简介</h1><p>下面这段介绍来源于搭建好mindoc 创建的普通文档模版</p>
+<blockquote>
+<p>MinDoc 是一款针对IT团队开发的简单好用的文档管理系统。</p>
+<p>MinDoc 的前身是 SmartWiki 文档系统。SmartWiki 是基于 PHP 框架 laravel 开发的一款文档管理系统。因 PHP 的部署对普通用户来说太复杂，所以改用 Golang 开发。可以方便用户部署和实用。</p>
+<p>开发缘起是公司IT部门需要一款简单实用的项目接口文档管理和分享的系统。其功能和界面源于 kancloud 。</p>
+<p>可以用来储存日常接口文档，数据库字典，手册说明等文档。内置项目管理，用户管理，权限管理等功能，能够满足大部分中小团队的文档管理需求。</p>
+<p>演示站点： <a href="http://doc.iminho.me" target="_blank" rel="external">http://doc.iminho.me</a></p>
+</blockquote>
+<h1 id="安装与使用"><a href="#安装与使用" class="headerlink" title="安装与使用"></a>安装与使用</h1><h2 id="安装环境介绍及版本"><a href="#安装环境介绍及版本" class="headerlink" title="安装环境介绍及版本"></a>安装环境介绍及版本</h2><p>glibc库要求大于等于2.14版本，Centos7默认自带满足，Centos6需要手动升级，有风险。</p>
+<ul>
+<li><p>Centos 7</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@master data]# uname -a </div><div class="line">Linux master 3.10.0-514.el7.x86_64 #1 SMP Tue Nov 22 16:42:41 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux</div><div class="line">[root@master data]# cat /etc/redhat-release </div><div class="line">CentOS Linux release 7.3.1611 (Core) </div><div class="line">[root@master mindoc]# rpm -qa |grep glibc</div><div class="line">glibc-headers-2.17-157.el7.x86_64</div><div class="line">compat-glibc-headers-2.12-4.el7.centos.x86_64</div><div class="line">glibc-2.17-157.el7.x86_64</div><div class="line">glibc-common-2.17-157.el7.x86_64</div><div class="line">glibc-devel-2.17-157.el7.x86_64</div><div class="line">compat-glibc-2.12-4.el7.centos.x86_64</div></pre></td></tr></table></figure>
+</li>
+<li><p>mysql 社区版5.7</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@master ~]# mysql -V</div><div class="line">mysql  Ver 14.14 Distrib 5.7.19, for Linux (x86_64) using  EditLine wrapper</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><h3 id="Centos-国内yum-源配置"><a href="#Centos-国内yum-源配置" class="headerlink" title="Centos 国内yum 源配置"></a>Centos 国内yum 源配置</h3><p>加快软件安装速度，国内有网易<a href="http://mirrors.163.com/" target="_blank" rel="external">163</a>、<a href="http://mirrors.aliyun.com/" target="_blank" rel="external">阿里</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn/" target="_blank" rel="external">清华</a>等大学免费镜像站，下面以163为例。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd /etc/yum.repos.d/</div><div class="line">mv CentOS-Base.repo CentOS-Base.repo.backup</div><div class="line">wget http://mirrors.163.com/.help/CentOS7-Base-163.repo</div><div class="line">yum clean all</div><div class="line">yum makecache</div></pre></td></tr></table></figure></p>
+<h3 id="go-安装"><a href="#go-安装" class="headerlink" title="go 安装"></a>go 安装</h3><p>mindoc 是由go 语音编写的<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /data/</div><div class="line">wget https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz</div><div class="line">tar -C /usr/local -xzf go1.9.1.linux-amd64.tar.gz</div></pre></td></tr></table></figure></p>
+<p>/etc/profile 文件增加go环境变量配置<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export PATH=$PATH:/usr/local/go/bin</div></pre></td></tr></table></figure></p>
+<p>使环境变量配置立即生效<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source  /etc/profile</div></pre></td></tr></table></figure></p>
+<p>验证go环境变量<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@master ~]# go version</div><div class="line">go version go1.9.1 linux/amd64</div></pre></td></tr></table></figure></p>
+<h3 id="mysql-安装"><a href="#mysql-安装" class="headerlink" title="mysql 安装"></a>mysql 安装</h3><p><a href="(https://dev.mysql.com/downloads/" title="mysql下载网址">mysql下载网址</a><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate  https://repo.mysql.com/mysql57-community-release-el7-11.noarch.rpm</div><div class="line">rpm -ivh mysql57-community-release-el7-11.noarch.rpm</div><div class="line">yum install mysql-community-server</div></pre></td></tr></table></figure></p>
+<h3 id="mysql-配置"><a href="#mysql-配置" class="headerlink" title="mysql 配置"></a>mysql 配置</h3><p>增加默认字符集配置，防止出现乱码<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="section">[root@master ~]</span><span class="comment"># cat /etc/my.cnf</span></div><div class="line"><span class="section">[mysqld]</span></div><div class="line"><span class="attr">datadir</span>=/var/lib/mysql</div><div class="line"><span class="attr">socket</span>=/var/lib/mysql/mysql.sock</div><div class="line"><span class="attr">symbolic-links</span>=<span class="number">0</span></div><div class="line"><span class="attr">log-error</span>=/var/log/mysqld.log</div><div class="line"><span class="attr">pid-file</span>=/var/run/mysqld/mysqld.pid</div><div class="line"><span class="attr">character_set_server</span>= utf8</div><div class="line"><span class="section">[client]</span></div><div class="line"><span class="attr">default-character-set</span>= utf8</div></pre></td></tr></table></figure></p>
+<p>mysql 服务开启及确认开机自动启动<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">systemctl  start mysqld</div><div class="line">systemctl  enable mysqld</div><div class="line">[root@master ~]# systemctl list-unit-files |grep -i mysqld</div><div class="line">mysqld.service                             enabled</div></pre></td></tr></table></figure></p>
+<p>mysql 初始密码<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="section">[root@master ~]</span><span class="comment"># cat /var/log/mysqld.log </span></div><div class="line">2017-10-16T06:59:09.365112Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).</div><div class="line">2017-10-16T06:59:10.596156Z 0 [Warning] InnoDB: New log files created, LSN=45790</div><div class="line">2017-10-16T06:59:10.718918Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.</div><div class="line">2017-10-16T06:59:10.778181Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 82f3affd-b23f-11e7-8a42-000c29530ed1.</div><div class="line">2017-10-16T06:59:10.779299Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.</div><div class="line">2017-10-16T06:59:10.780256Z 1 [Note] A temporary password is generated for root@localhost: G#(;vXBdp4il</div><div class="line">2017-10-16T06:59:14.047069Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).</div></pre></td></tr></table></figure></p>
+<p>用初始化密码(G#(;vXBdp4il)登录数据库,修改默认密码复杂要求策略及建用户<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">[root@master yum.repos.d]# mysql -uroot -p</div><div class="line">Enter password: </div><div class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</div><div class="line">Your MySQL connection id is 6</div><div class="line">Server version: 5.7.19</div><div class="line"></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> CREATE USER <span class="string">'mindoc'</span>@<span class="string">'localhost'</span> IDENTIFIED BY <span class="string">'123456'</span>;</span></div><div class="line">ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> SHOW VARIABLES LIKE <span class="string">'validate_password%'</span>;</span></div><div class="line">+--------------------------------------+--------+</div><div class="line">| Variable_name                        | Value  |</div><div class="line">+--------------------------------------+--------+</div><div class="line">| validate_password_check_user_name    | OFF    |</div><div class="line">| validate_password_dictionary_file    |        |</div><div class="line">| validate_password_length             | 8      |</div><div class="line">| validate_password_mixed_case_count   | 1      |</div><div class="line">| validate_password_number_count       | 1      |</div><div class="line">| validate_password_policy             | MEDIUM |</div><div class="line">| validate_password_special_char_count | 1      |</div><div class="line">+--------------------------------------+--------+</div><div class="line">7 rows in set (0.03 sec)</div><div class="line"></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> global validate_password_policy=0;  </span></div><div class="line">Query OK, 0 rows affected (0.06 sec)</div><div class="line"></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> global validate_password_mixed_case_count=0;  </span></div><div class="line">Query OK, 0 rows affected (0.00 sec)</div><div class="line"></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> global validate_password_number_count=3; </span></div><div class="line">Query OK, 0 rows affected (0.00 sec)</div><div class="line"></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> global validate_password_special_char_count=0; </span></div><div class="line">Query OK, 0 rows affected (0.00 sec)</div><div class="line"></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> global validate_password_length=3;</span></div><div class="line">Query OK, 0 rows affected (0.00 sec)</div><div class="line"></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> CREATE USER <span class="string">'mindoc'</span>@<span class="string">'localhost'</span> IDENTIFIED BY <span class="string">'123456'</span>;</span></div><div class="line">Query OK, 0 rows affected (0.09 sec)</div><div class="line"></div><div class="line"><span class="meta">mysql&gt;</span><span class="bash"> SHOW VARIABLES LIKE <span class="string">'validate_password%'</span>;</span></div><div class="line">+--------------------------------------+-------+</div><div class="line">| Variable_name                        | Value |</div><div class="line">+--------------------------------------+-------+</div><div class="line">| validate_password_check_user_name    | OFF   |</div><div class="line">| validate_password_dictionary_file    |       |</div><div class="line">| validate_password_length             | 3     |</div><div class="line">| validate_password_mixed_case_count   | 0     |</div><div class="line">| validate_password_number_count       | 3     |</div><div class="line">| validate_password_policy             | LOW   |</div><div class="line">| validate_password_special_char_count | 0     |</div><div class="line">+--------------------------------------+-------+</div><div class="line">7 rows in set (0.01 sec)</div><div class="line"></div><div class="line">set password for 'root'@'localhost' =password('password');</div><div class="line"></div><div class="line">CREATE USER 'mindoc'@'localhost' IDENTIFIED BY '123456';</div></pre></td></tr></table></figure></p>
+<p>创建mindoc需要使用的数据库，并赋权限给mindoc用户本地可以访问及控制该库mindoc_db<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql&gt; create database mindoc_db;</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; grant all privileges on mindoc_db.* to mindoc@localhost ;</div><div class="line">Query OK, 0 rows affected (0.03 sec)</div></pre></td></tr></table></figure></p>
+<p>字符集确认<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show variables like '%character%';</div><div class="line">+--------------------------+----------------------------+</div><div class="line">| Variable_name            | Value                      |</div><div class="line">+--------------------------+----------------------------+</div><div class="line">| character_set_client     | utf8                       |</div><div class="line">| character_set_connection | utf8                       |</div><div class="line">| character_set_database   | utf8                       |</div><div class="line">| character_set_filesystem | binary                     |</div><div class="line">| character_set_results    | utf8                       |</div><div class="line">| character_set_server     | utf8                       |</div><div class="line">| character_set_system     | utf8                       |</div><div class="line">| character_sets_dir       | /usr/share/mysql/charsets/ |</div><div class="line">+--------------------------+----------------------------+</div></pre></td></tr></table></figure></p>
+<h2 id="mindoc-安装"><a href="#mindoc-安装" class="headerlink" title="mindoc 安装"></a>mindoc 安装</h2><p><a href="https://github.com/lifei6671/mindoc/releases" title="mindoc v0.6版本介质下载" target="_blank" rel="external">mindoc v0.6版本介质下载</a><br>介质下载后上传及解压<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mkdir /data/mindoc</div><div class="line"><span class="built_in">cd</span> /data/mindoc</div><div class="line">tar -xzvf mindoc_linux_amd64.tar.gz </div><div class="line">[root@master mindoc]<span class="comment"># ls -l</span></div><div class="line">总用量 27436</div><div class="line">drwxr--r--  2 root root        6 10月 20 11:24 cache</div><div class="line">drwxrwxrwx  2 root root       46 10月 16 15:44 conf</div><div class="line">-rwxrwxrwx  1 root root     2462 7月  10 19:29 favicon.ico</div><div class="line">drwxrwxrwx  3 root root       18 7月  10 19:29 lib</div><div class="line">drwxr-xr-x  5 root root       33 10月 20 11:24 logs</div><div class="line">-rwxrwxrwx  1 root root 16718312 7月  10 19:32 mindoc_linux_amd64</div><div class="line">-rw-r--r--  1 root root 11327240 10月 16 15:23 mindoc_linux_amd64.tar.gz</div><div class="line">-rw-r--r--  1 root root    38020 10月 20 11:24 nohup.out</div><div class="line">drwxrwxrwx 23 root root      333 7月  10 19:29 static</div><div class="line">drwxrwxrwx  2 root root      258 7月  10 19:36 uploads</div><div class="line">drwxrwxrwx 13 root root      182 7月  10 19:29 views</div></pre></td></tr></table></figure></p>
+<p>修改配置文件数据库配置部分，其他根据自身情况进行修改。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@master mindoc]<span class="comment"># cp conf/app.conf.example conf/app.conf</span></div><div class="line">[root@master mindoc]<span class="comment"># cat  conf/app.conf</span></div><div class="line"><span class="comment">####################MySQL 数据库配置###########################</span></div><div class="line"><span class="comment">#支持MySQL和sqlite3两种数据库，如果是sqlite3 则 db_database 标识数据库的物理目录</span></div><div class="line">db_adapter=mysql</div><div class="line">db_host=127.0.0.1</div><div class="line">db_port=3306</div><div class="line">db_database=mindoc_db</div><div class="line">db_username=mindoc</div><div class="line">db_password=123456</div></pre></td></tr></table></figure></p>
+<p>执行数据库初始化脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /data/mindoc</div><div class="line"> ./mindoc_linux_amd64 install</div></pre></td></tr></table></figure></p>
+<h3 id="mindoc-启动运行及登录验证"><a href="#mindoc-启动运行及登录验证" class="headerlink" title="mindoc 启动运行及登录验证"></a>mindoc 启动运行及登录验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /data/mindoc</div><div class="line">nohup ./mindoc_linux_amd64 &gt;nohup.out 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
+<p>注意linux防火墙需要打开8181端口，打开浏览器直接访问，默认用户名是admin，密码:123456<br>关闭防火墙<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@master mindoc]<span class="comment"># systemctl stop firewalld.service</span></div><div class="line">[root@master mindoc]<span class="comment"># systemctl status firewalld.service</span></div><div class="line">● firewalld.service - firewalld - dynamic firewall daemon</div><div class="line">   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)</div><div class="line">   Active: inactive (dead)</div><div class="line">     Docs: man:firewalld(1)</div><div class="line">[root@master mindoc]<span class="comment"># systemctl disable firewalld.service</span></div></pre></td></tr></table></figure></p>
+<h3 id="mindoc-做成服务开机自动启动"><a href="#mindoc-做成服务开机自动启动" class="headerlink" title="mindoc 做成服务开机自动启动"></a>mindoc 做成服务开机自动启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /data/mindoc</div><div class="line"> ./mindoc_linux_amd64 service install </div><div class="line">[root@master mindoc]<span class="comment"># systemctl start mindocd</span></div><div class="line">[root@master mindoc]<span class="comment"># systemctl enable mindocd</span></div><div class="line">[root@master mindoc]<span class="comment"># systemctl status  mindocd</span></div><div class="line">● mindocd.service - A document online management program.</div><div class="line">   Loaded: loaded (/etc/systemd/system/mindocd.service; enabled; vendor preset: disabled)</div><div class="line">   Active: active (running) since 五 2017-10-20 17:04:40 CST; 21s ago</div><div class="line"> Main PID: 18681 (mindoc_linux_am)</div><div class="line">   CGroup: /system.slice/mindocd.service</div><div class="line">           └─18681 /data/mindoc/mindoc_linux_amd64</div><div class="line"></div><div class="line">10月 20 17:04:40 master systemd[1]: Started A document online management program..</div><div class="line">10月 20 17:04:40 master systemd[1]: Starting A document online management program....</div><div class="line">10月 20 17:04:40 master mindoc_linux_amd64[18681]: MinDoc version =&gt; v0.6</div><div class="line">10月 20 17:04:40 master mindoc_linux_amd64[18681]: build time =&gt; Mon Jul 10 19:29:03 CST 2017</div><div class="line">10月 20 17:04:40 master mindoc_linux_amd64[18681]: start directory =&gt; /data/mindoc/mindoc_linux_amd64</div><div class="line">10月 20 17:04:40 master mindoc_linux_amd64[18681]: 2017/10/20 17:04:40 [I] [asm_amd64.s:2197] http server Running on http://:8181</div></pre></td></tr></table></figure>
+<h2 id="mindoc-pdf-导出功能配置"><a href="#mindoc-pdf-导出功能配置" class="headerlink" title="mindoc pdf 导出功能配置"></a>mindoc pdf 导出功能配置</h2><p>导出 pdf 格式文档使用的是<a href="https://wkhtmltopdf.org/downloads.html" title="wkhtmltopdf" target="_blank" rel="external">wkhtmltopdf</a></p>
+<h3 id="下载对应稳定版本"><a href="#下载对应稳定版本" class="headerlink" title="下载对应稳定版本"></a>下载对应稳定版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz</div><div class="line">xz -d wkhtmltox-0.12.4_linux-generic-amd64.tar.xz</div><div class="line">cp wkhtmltox-0.12.4_linux-generic-amd64.tar /data/</div><div class="line">tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar</div><div class="line"><span class="built_in">cd</span> /data/wkhtmltox/</div></pre></td></tr></table></figure>
+<h3 id="依赖包安装"><a href="#依赖包安装" class="headerlink" title="依赖包安装"></a>依赖包安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">yum install zlib</div><div class="line">yum install fontconfig</div><div class="line">yum install freetype </div><div class="line">yum install libX11</div><div class="line">yum install libXext</div><div class="line">yum install libXrender</div></pre></td></tr></table></figure>
+<h3 id="验证生成pdf是否正常"><a href="#验证生成pdf是否正常" class="headerlink" title="验证生成pdf是否正常"></a>验证生成pdf是否正常</h3><p>可以访问外网，就拿百度做测试。无法访问外网，就随便拿个内网可以访问的url。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cd /data/wkhtmltox/bin/</span></div><div class="line">./wkhtmltopdf www.baidu.com test.pdf  </div><div class="line">./wkhtmltopdf http://x.x.x.x/docs/mindoc/1  test.pdf</div></pre></td></tr></table></figure></p>
+<p>下载test.pdf 用pdf软件打开查看是否正常</p>
+<h3 id="pdf中文乱码解决"><a href="#pdf中文乱码解决" class="headerlink" title="pdf中文乱码解决"></a>pdf中文乱码解决</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir -p  /usr/share/fonts/chinese/TrueType/</div><div class="line"> ls -lrt</div><div class="line">总用量 14988</div><div class="line">-rw-r--r-- 1 root root 15323200 10月 17 09:54 simsun.ttc</div></pre></td></tr></table></figure>
+<p>再将windows C:\Windows\Fonts下宋体传到该目录<br>重新验证测试，乱码解决。</p>
+<h3 id="配置mindoc-pdf导出设置"><a href="#配置mindoc-pdf导出设置" class="headerlink" title="配置mindoc pdf导出设置"></a>配置mindoc pdf导出设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /data/mindoc/</div><div class="line">cat conf/app.conf</div><div class="line"><span class="comment">###############配置PDF生成工具地址###################</span></div><div class="line">wkhtmltopdf=/data/wkhtmltox/bin/wkhtmltopdf</div><div class="line"></div><div class="line">systemctl restart  mindocd</div></pre></td></tr></table></figure>
+<p>打开浏览器项目导出pdf，验证正常。</p>
+<h2 id="效果图展示"><a href="#效果图展示" class="headerlink" title="效果图展示"></a>效果图展示</h2><h3 id="mindoc编辑效果图"><a href="#mindoc编辑效果图" class="headerlink" title="mindoc编辑效果图"></a>mindoc编辑效果图</h3><p>浏览器访问，左边编辑，右边及时预览就可以实时看到效果。编写语言按照markdown语法<br><img src="http://oy2fglccv.bkt.clouddn.com/mindoc.png" alt="mindoc编辑效果图"></p>
+<h3 id="pdf导出效果"><a href="#pdf导出效果" class="headerlink" title="pdf导出效果"></a>pdf导出效果</h3><p><img src="http://oy2fglccv.bkt.clouddn.com/wkhtmltopdf.png" alt="htmltopdf导出效果图"></p>
+<p>其他问题可参考  <a href="https://github.com/lifei6671/mindoc/wiki" title="mindoc 官方手册" target="_blank" rel="external">mindoc 官方手册</a></p>
+
+      
+    </div>
+    
+    
+    
+<div>
+  
+     <div>
+    
+        <div style="text-align:center;color: #ccc;heart:32px;">----纸上得来终觉浅<i class="fa fa-heart"></i>绝知此事要躬行----</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>最好的赞赏是您的阅读！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="上官云涯 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    上官云涯
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://shanguanyunya.github.io/2017/10/20/mindoc-build/" title="mindoc 文档管理系统搭建">https://shanguanyunya.github.io/2017/10/20/mindoc-build/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mindoc/" rel="tag"><i class="fa fa-tag"></i> mindoc</a>
+          
+            <a href="/tags/文档管理/" rel="tag"><i class="fa fa-tag"></i> 文档管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/20/bulid-blog-log-1/" rel="next" title="搭建免费博客（上）">
+                <i class="fa fa-chevron-left"></i> 搭建免费博客（上）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/20/test/" rel="prev" title="Chinese test">
+                Chinese test <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="上官云涯" />
+            
+              <p class="site-author-name" itemprop="name">上官云涯</p>
+              <p class="site-description motion-element" itemprop="description">办法总比问题多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/shanguanyunya" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zhaoqianzhang@yeah.net" target="_blank" title="邮箱">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>邮箱</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.sina.com.cn/shangguanyunya/" title="我的新浪博客" target="_blank">我的新浪博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面的话"><span class="nav-number">1.</span> <span class="nav-text">写在前面的话</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#每篇一句"><span class="nav-number">1.1.</span> <span class="nav-text">每篇一句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MinDoc-简介"><span class="nav-number">2.</span> <span class="nav-text">MinDoc 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装与使用"><span class="nav-number">3.</span> <span class="nav-text">安装与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境介绍及版本"><span class="nav-number">3.1.</span> <span class="nav-text">安装环境介绍及版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装前准备"><span class="nav-number">3.2.</span> <span class="nav-text">安装前准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Centos-国内yum-源配置"><span class="nav-number">3.2.1.</span> <span class="nav-text">Centos 国内yum 源配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-安装"><span class="nav-number">3.2.2.</span> <span class="nav-text">go 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-安装"><span class="nav-number">3.2.3.</span> <span class="nav-text">mysql 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-配置"><span class="nav-number">3.2.4.</span> <span class="nav-text">mysql 配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mindoc-安装"><span class="nav-number">3.3.</span> <span class="nav-text">mindoc 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mindoc-启动运行及登录验证"><span class="nav-number">3.3.1.</span> <span class="nav-text">mindoc 启动运行及登录验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mindoc-做成服务开机自动启动"><span class="nav-number">3.3.2.</span> <span class="nav-text">mindoc 做成服务开机自动启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mindoc-pdf-导出功能配置"><span class="nav-number">3.4.</span> <span class="nav-text">mindoc pdf 导出功能配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载对应稳定版本"><span class="nav-number">3.4.1.</span> <span class="nav-text">下载对应稳定版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖包安装"><span class="nav-number">3.4.2.</span> <span class="nav-text">依赖包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证生成pdf是否正常"><span class="nav-number">3.4.3.</span> <span class="nav-text">验证生成pdf是否正常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pdf中文乱码解决"><span class="nav-number">3.4.4.</span> <span class="nav-text">pdf中文乱码解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置mindoc-pdf导出设置"><span class="nav-number">3.4.5.</span> <span class="nav-text">配置mindoc pdf导出设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果图展示"><span class="nav-number">3.5.</span> <span class="nav-text">效果图展示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mindoc编辑效果图"><span class="nav-number">3.5.1.</span> <span class="nav-text">mindoc编辑效果图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pdf导出效果"><span class="nav-number">3.5.2.</span> <span class="nav-text">pdf导出效果</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">上官云涯</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">4.8k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 本站总访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      人次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("DvqIeJU4KeBrr04TAJ5QVyB7-gzGzoHsz", "fmugIvgz7n9Vcg0gxLpWD3PJ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
