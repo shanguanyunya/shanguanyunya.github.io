@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="docker,容器,centos7,云平台技术," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="404">
-<meta property="og:url" content="https://shanguanyunya.github.io/404/index.html">
+<meta name="description" content="写在前面的话每篇一句板凳要坐十年冷；文章不写半句空。 上篇通过dockerfile已经构建了自己的镜像，那如何将镜像分享到自己的仓库呢？ 首先注册docker hub账号官网地址 构建你的容器仓库，分享你的镜像通过docker ID登录我的用户名是zakizqzhang12345[root@localhost ~]# docker loginLogin with your Docker ID to">
+<meta name="keywords" content="docker,容器,centos7,云平台技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker 容器入门（三）">
+<meta property="og:url" content="https://shanguanyunya.github.io/2017/10/28/docker-begin-3/index.html">
 <meta property="og:site_name" content="上官云涯&#39;s blog">
+<meta property="og:description" content="写在前面的话每篇一句板凳要坐十年冷；文章不写半句空。 上篇通过dockerfile已经构建了自己的镜像，那如何将镜像分享到自己的仓库呢？ 首先注册docker hub账号官网地址 构建你的容器仓库，分享你的镜像通过docker ID登录我的用户名是zakizqzhang12345[root@localhost ~]# docker loginLogin with your Docker ID to">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-17T15:54:42.000Z">
+<meta property="og:updated_time" content="2017-10-29T05:33:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="404">
+<meta name="twitter:title" content="docker 容器入门（三）">
+<meta name="twitter:description" content="写在前面的话每篇一句板凳要坐十年冷；文章不写半句空。 上篇通过dockerfile已经构建了自己的镜像，那如何将镜像分享到自己的仓库呢？ 首先注册docker hub账号官网地址 构建你的容器仓库，分享你的镜像通过docker ID登录我的用户名是zakizqzhang12345[root@localhost ~]# docker loginLogin with your Docker ID to">
 
 
 
@@ -116,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://shanguanyunya.github.io/404/"/>
+  <link rel="canonical" href="https://shanguanyunya.github.io/2017/10/28/docker-begin-3/"/>
 
 
 
 
 
-  <title>404 | 上官云涯's blog</title>
+  <title>docker 容器入门（三） | 上官云涯's blog</title>
   
 
 
@@ -291,34 +295,277 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shanguanyunya.github.io/2017/10/28/docker-begin-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="上官云涯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上官云涯's blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">404</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <script type="text/javascript" src="//qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js" charset="utf-8" homepageurl="https://shanguanyunya.github.io/" homepagename="回到我的主页"></script>
-
+          <h1 class="post-title" itemprop="name headline">docker 容器入门（三）</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T22:13:56+08:00">
+                2017-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/28/docker-begin-3/" class="leancloud_visitors" data-flag-title="docker 容器入门（三）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  863 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h2><h3 id="每篇一句"><a href="#每篇一句" class="headerlink" title="每篇一句"></a>每篇一句</h3><p>板凳要坐十年冷；文章不写半句空。</p>
+<p>上篇通过dockerfile已经构建了自己的镜像，那如何将镜像分享到自己的仓库呢？</p>
+<p>首先注册docker hub账号<a href="https://hub.docker.com" target="_blank" rel="external">官网地址</a></p>
+<h2 id="构建你的容器仓库，分享你的镜像"><a href="#构建你的容器仓库，分享你的镜像" class="headerlink" title="构建你的容器仓库，分享你的镜像"></a>构建你的容器仓库，分享你的镜像</h2><h3 id="通过docker-ID登录"><a href="#通过docker-ID登录" class="headerlink" title="通过docker ID登录"></a>通过docker ID登录</h3><p>我的用户名是zakizqzhang<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># docker login</span></div><div class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don<span class="string">'t have a Docker ID, head over to https://hub.docker.com to create one.</span></div><div class="line"><span class="string">Username: zakizqzhang</span></div><div class="line"><span class="string">Password: </span></div><div class="line"><span class="string">Login Succeeded</span></div></pre></td></tr></table></figure></p>
+<h3 id="给你的镜像打上标签"><a href="#给你的镜像打上标签" class="headerlink" title="给你的镜像打上标签"></a>给你的镜像打上标签</h3><p>通常是username/repository:tag来定义你的一个镜像，tag选项是可选的，但是推荐使用来让其他人明白，最好使用有意义的命名，比如dockerfiletestapp:v1.0,v1.0就是标签，明确知道是第1.0版本，或者使用<br>dockerfiletestapp:20171028，明确知道是2017年10月28号构建的镜像。</p>
+<p>命令语法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker tag image username/repository:tag</div></pre></td></tr></table></figure></p>
+<h4 id="查看本地有哪些镜像"><a href="#查看本地有哪些镜像" class="headerlink" title="查看本地有哪些镜像"></a>查看本地有哪些镜像</h4><p>其中dockerfiletestapp就是上次我们用dockerfile构建的镜像<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># docker images</span></div><div class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">dockerfiletestapp   latest              6410ee31b207        6 days ago          195MB</div><div class="line">python              2.7-slim            9724e90f1f17        2 weeks ago         184MB</div><div class="line">hello-world         latest              05a3bd381fc2        6 weeks ago         1.84kB</div></pre></td></tr></table></figure></p>
+<h4 id="给dockerfiletestapp-镜像打上标签"><a href="#给dockerfiletestapp-镜像打上标签" class="headerlink" title="给dockerfiletestapp 镜像打上标签"></a>给dockerfiletestapp 镜像打上标签</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># docker tag dockerfiletestapp  zakizqzhang/get-started:20171028</span></div><div class="line">[root@localhost ~]<span class="comment"># docker images</span></div><div class="line">REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">dockerfiletestapp         latest              6410ee31b207        6 days ago          195MB</div><div class="line">zakizqzhang/get-started   20171028            6410ee31b207        6 days ago          195MB</div><div class="line">python                    2.7-slim            9724e90f1f17        2 weeks ago         184MB</div><div class="line">hello-world               latest              05a3bd381fc2        6 weeks ago         1.84kB</div></pre></td></tr></table></figure>
+<h3 id="push-发布上传镜像"><a href="#push-发布上传镜像" class="headerlink" title="push 发布上传镜像"></a>push 发布上传镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># docker push  zakizqzhang/get-started:20171028</span></div><div class="line">The push refers to a repository [docker.io/zakizqzhang/get-started]</div><div class="line">71fedff88b96: Pushed </div><div class="line">1f3b097ea1a5: Pushed </div><div class="line">3a3e7e444f5d: Pushed </div><div class="line">f39f8a7b1485: Mounted from library/python </div><div class="line">5e4d4a29edae: Mounted from library/python </div><div class="line">f46f014db30a: Mounted from library/python </div><div class="line">c01c63c6823d: Mounted from library/python </div><div class="line">20171028: digest: sha256:208754af6f21fc4a14eacc22b2734f490cb3c3a495c7595a74a79529f68429ee size: 1787</div></pre></td></tr></table></figure>
+<h3 id="在任何一台联网装有docker引擎的机器上拉取并运行远程仓库镜像"><a href="#在任何一台联网装有docker引擎的机器上拉取并运行远程仓库镜像" class="headerlink" title="在任何一台联网装有docker引擎的机器上拉取并运行远程仓库镜像"></a>在任何一台联网装有docker引擎的机器上拉取并运行远程仓库镜像</h3><p>这里为了方便，先将本地dockerfiletestapp镜像删除。注意删除镜像的前置条件是先删除通过该镜像运行过的容器方可删除镜像。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># docker image rm zakizqzhang/get-started:20171028</span></div><div class="line">Untagged: zakizqzhang/get-started:20171028</div><div class="line">Untagged: zakizqzhang/get-started@sha256:208754af6f21fc4a14eacc22b2734f490cb3c3a495c7595a74a79529f68429ee</div><div class="line">[root@localhost ~]<span class="comment"># docker image rm dockerfiletestapp</span></div><div class="line">Error response from daemon: conflict: unable to remove repository reference <span class="string">"dockerfiletestapp"</span> (must force) - container 00616249b739 is using its referenced image 6410ee31b207</div><div class="line">[root@localhost ~]<span class="comment"># docker ps --all</span></div><div class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS                  NAMES</div><div class="line">032f18cd82ef        6410ee31b207        <span class="string">"python app.py"</span>     2 minutes ago       Exited (0) 54 seconds ago                          flamboyant_lamport</div><div class="line">f5295eca69d8        dockerfiletestapp   <span class="string">"python app.py"</span>     6 days ago          Exited (255) 6 days ago     0.0.0.0:8080-&gt;80/tcp   optimistic_goldberg</div><div class="line">bf03b99b65fc        dockerfiletestapp   <span class="string">"python app.py"</span>     6 days ago          Exited (0) 6 days ago                              romantic_knuth</div><div class="line">00616249b739        dockerfiletestapp   <span class="string">"python app.py"</span>     6 days ago          Exited (0) 6 days ago                              priceless_stonebraker</div><div class="line">e892562d1fa4        hello-world         <span class="string">"/hello"</span>            6 days ago          Exited (0) 6 days ago                              determined_raman</div><div class="line">[root@localhost ~]<span class="comment"># docker rm 00616249b739 bf03b99b65fc f5295eca69d8</span></div><div class="line">00616249b739</div><div class="line">bf03b99b65fc</div><div class="line">f5295eca69d8</div><div class="line">[root@localhost ~]<span class="comment"># docker image rm dockerfiletestapp</span></div><div class="line">Error response from daemon: conflict: unable to remove repository reference <span class="string">"dockerfiletestapp"</span> (must force) - container 032f18cd82ef is using its referenced image 6410ee31b207</div><div class="line">[root@localhost ~]<span class="comment"># docker ps --all</span></div><div class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES</div><div class="line">032f18cd82ef        6410ee31b207        <span class="string">"python app.py"</span>     3 minutes ago       Exited (0) 2 minutes ago                       flamboyant_lamport</div><div class="line">e892562d1fa4        hello-world         <span class="string">"/hello"</span>            6 days ago          Exited (0) 6 days ago                          determined_raman</div><div class="line">[root@localhost ~]<span class="comment"># docker rm 032f18cd82ef </span></div><div class="line">032f18cd82ef</div><div class="line">[root@localhost ~]<span class="comment"># docker image rm dockerfiletestapp</span></div><div class="line">Untagged: dockerfiletestapp:latest</div><div class="line">Deleted: sha256:6410ee31b207d3cdf8120c69b27de0abf3962e6a06eb339410ba1ca4c51b46f5</div><div class="line">Deleted: sha256:c3639bed347aae90e7d81e047384249ff3969725ded6ae9e8aca225a1f734d31</div><div class="line">Deleted: sha256:dd270ef27c690dc6491ae844f54bc85a5cffadc4206779a8be48cf93eae0becc</div><div class="line">Deleted: sha256:9956c6e6c7c952fcde7b61d98aec4e5b545ec2a9608c0f9def397ba46ba33a59</div><div class="line">Deleted: sha256:0ca8e4dc2aa04cfc28294e9679dac0e41b0941ea5decad36dacc68549269760e</div><div class="line">Deleted: sha256:046356d78b97a7d14e4bfe360218a0068005eeca0a2931418bc5f3a308367268</div><div class="line">Deleted: sha256:3400ce1c487e9213c6be4c6ade646eebbc64bae8666151a208d3179fb04581b4</div><div class="line">Deleted: sha256:40fcd39ff30a1569a680fa8ddb9968b7062e0e6f32a58416877e76338e7b0734</div><div class="line">Deleted: sha256:e7d7f9d762c90de03b48c583a5304626df173ba2a0e2c6387110f87af7e5d809</div><div class="line">[root@localhost ~]<span class="comment"># docker images</span></div><div class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">python              2.7-slim            9724e90f1f17        2 weeks ago         184MB</div><div class="line">hello-world         latest              05a3bd381fc2        6 weeks ago         1.84kB</div></pre></td></tr></table></figure></p>
+<p>通过拉取远程仓库镜像本地运行容器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]<span class="comment"># docker run -p 8080:80  zakizqzhang/get-started:20171028</span></div><div class="line">Unable to find image <span class="string">'zakizqzhang/get-started:20171028'</span> locally</div><div class="line">20171028: Pulling from zakizqzhang/get-started</div><div class="line">85b1f47fba49: Already exists </div><div class="line">a5e401c4a903: Already exists </div><div class="line">9f744658dd62: Already exists </div><div class="line">562843cc69f8: Already exists </div><div class="line">361ab7a9bb73: Pull complete </div><div class="line">72c3035db3bc: Pull complete </div><div class="line">68e97c9c12b4: Pull complete </div><div class="line">Digest: sha256:208754af6f21fc4a14eacc22b2734f490cb3c3a495c7595a74a79529f68429ee</div><div class="line">Status: Downloaded newer image <span class="keyword">for</span> zakizqzhang/get-started:20171028</div><div class="line"> * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)</div></pre></td></tr></table></figure></p>
+<p>运行的容器所需的python、flask、redis、应用脚本app.py等依赖全部不用你再考虑了，实现了一次构建，随处运行。</p>
+
       
     </div>
     
     
     
+<div>
+  
+     <div>
+    
+        <div style="text-align:center;color: #ccc;heart:32px;">----纸上得来终觉浅<i class="fa fa-heart"></i>绝知此事要躬行----</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>最好的赞赏是您的阅读！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="上官云涯 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    上官云涯
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://shanguanyunya.github.io/2017/10/28/docker-begin-3/" title="docker 容器入门（三）">https://shanguanyunya.github.io/2017/10/28/docker-begin-3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+          
+            <a href="/tags/容器/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
+          
+            <a href="/tags/centos7/" rel="tag"><i class="fa fa-tag"></i> centos7</a>
+          
+            <a href="/tags/云平台技术/" rel="tag"><i class="fa fa-tag"></i> 云平台技术</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/24/docker-begin-2/" rel="next" title="docker 容器入门（二）">
+                <i class="fa fa-chevron-left"></i> docker 容器入门（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -356,8 +603,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -455,6 +711,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面的话"><span class="nav-number">1.</span> <span class="nav-text">写在前面的话</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#每篇一句"><span class="nav-number">1.1.</span> <span class="nav-text">每篇一句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建你的容器仓库，分享你的镜像"><span class="nav-number">2.</span> <span class="nav-text">构建你的容器仓库，分享你的镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过docker-ID登录"><span class="nav-number">2.1.</span> <span class="nav-text">通过docker ID登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给你的镜像打上标签"><span class="nav-number">2.2.</span> <span class="nav-text">给你的镜像打上标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看本地有哪些镜像"><span class="nav-number">2.2.1.</span> <span class="nav-text">查看本地有哪些镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#给dockerfiletestapp-镜像打上标签"><span class="nav-number">2.2.2.</span> <span class="nav-text">给dockerfiletestapp 镜像打上标签</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#push-发布上传镜像"><span class="nav-number">2.3.</span> <span class="nav-text">push 发布上传镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在任何一台联网装有docker引擎的机器上拉取并运行远程仓库镜像"><span class="nav-number">2.4.</span> <span class="nav-text">在任何一台联网装有docker引擎的机器上拉取并运行远程仓库镜像</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
