@@ -29,7 +29,7 @@
 <p>master 镜像扫描<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-clair.png" alt=""></p>
 <p>master 新建复制目标<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure.png" alt=""><br>master 新建复制规则<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-1.png" alt=""></p>
 <p><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-2.png" alt=""><br>master 同步镜像到slave 记录<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-3.png" alt=""><br>slave 在复制规则建立前<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-slave-before.png" alt=""><br>slave 自动同步成功<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-slave-autocopy.png" alt=""></p>
-<p>slave http 方式wireshark 抓包，可以看到镜像等信息，不够安全。<br><img src="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls.png" alt=""></p>
+<p>slave http 方式wireshark 抓包，可以看到账号密码、镜像等信息，不安全。<br><img src="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls-1.png" alt=""><br><img src="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls.png" alt=""></p>
 <p><a href="http://oy2fglccv.bkt.clouddn.com/harborwithtsl.pcapng" target="_blank" rel="external">harborwithtsl.pcapng</a><br><a href="http://oy2fglccv.bkt.clouddn.com/harbor-http.pcapng" target="_blank" rel="external">harbor-http.pcapng</a></p>
 ]]></content>
       
