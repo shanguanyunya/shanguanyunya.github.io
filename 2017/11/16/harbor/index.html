@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="云平台技术,harbor,容器仓库," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写在前面的话每篇一句临渊羡鱼，不如退而结网。 harbor搭建harbor githubharbor各发布版本harbor离线安装包harbor-offline-installer-v1.2.2.tgz 离线版安装，http基本要求python  &amp;gt;= 2.7Docker engine &amp;gt;= 1.10Docker Compose &amp;gt;= 1.60 安装过程1234567891011">
+<meta name="keywords" content="云平台技术,harbor,容器仓库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="harbor 搭建">
+<meta property="og:url" content="https://shanguanyunya.github.io/2017/11/16/harbor/index.html">
+<meta property="og:site_name" content="上官云涯&#39;s blog">
+<meta property="og:description" content="写在前面的话每篇一句临渊羡鱼，不如退而结网。 harbor搭建harbor githubharbor各发布版本harbor离线安装包harbor-offline-installer-v1.2.2.tgz 离线版安装，http基本要求python  &amp;gt;= 2.7Docker engine &amp;gt;= 1.10Docker Compose &amp;gt;= 1.60 安装过程1234567891011">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-loginbefore.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-clair.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-1.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-2.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-3.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-slave-before.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-slave-autocopy.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls.png">
+<meta property="og:updated_time" content="2017-11-16T14:41:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="harbor 搭建">
+<meta name="twitter:description" content="写在前面的话每篇一句临渊羡鱼，不如退而结网。 harbor搭建harbor githubharbor各发布版本harbor离线安装包harbor-offline-installer-v1.2.2.tgz 离线版安装，http基本要求python  &amp;gt;= 2.7Docker engine &amp;gt;= 1.10Docker Compose &amp;gt;= 1.60 安装过程1234567891011">
+<meta name="twitter:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-loginbefore.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://shanguanyunya.github.io/2017/11/16/harbor/"/>
+
+
+
+
+
+  <title>harbor 搭建 | 上官云涯's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">上官云涯's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shanguanyunya.github.io/2017/11/16/harbor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="上官云涯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上官云涯's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">harbor 搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T22:38:56+08:00">
+                2017-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/16/harbor/" class="leancloud_visitors" data-flag-title="harbor 搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,005 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h2><h3 id="每篇一句"><a href="#每篇一句" class="headerlink" title="每篇一句"></a>每篇一句</h3><p>临渊羡鱼，不如退而结网。</p>
+<h2 id="harbor搭建"><a href="#harbor搭建" class="headerlink" title="harbor搭建"></a>harbor搭建</h2><p><a href="https://github.com/vmware/harbor" target="_blank" rel="external">harbor github</a><br><a href="https://github.com/vmware/harbor/releases/" target="_blank" rel="external">harbor各发布版本</a><br><a href="http://harbor.orientsoft.cn/harbor-1.2.2/harbor-offline-installer-v1.2.2.tgz" target="_blank" rel="external">harbor离线安装包harbor-offline-installer-v1.2.2.tgz</a></p>
+<h3 id="离线版安装，http"><a href="#离线版安装，http" class="headerlink" title="离线版安装，http"></a>离线版安装，http</h3><h4 id="基本要求"><a href="#基本要求" class="headerlink" title="基本要求"></a>基本要求</h4><p>python  &gt;= 2.7<br>Docker engine &gt;= 1.10<br>Docker Compose &gt;= 1.60</p>
+<h4 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">root@controller:/data/harbor<span class="comment"># mkdir  -p /data/harbor/</span></div><div class="line">root@controller:/data/harbor<span class="comment"># tar -xzvf harbor.v1.2.2.tar.gz </span></div><div class="line">root@controller:/data/harbor<span class="comment"># ./install.sh</span></div><div class="line">root@controller:/data/harbor<span class="comment"># cat /etc/docker/daemon.json</span></div><div class="line">&#123;<span class="string">"registry-mirrors"</span>: [<span class="string">"http://8b3fddac.m.daocloud.io"</span>],</div><div class="line"><span class="string">"insecure-registries"</span> : [<span class="string">"controller:80"</span>]</div><div class="line">&#125;</div><div class="line">root@controller:/lib/systemd/system<span class="comment"># systemctl daemon-reload</span></div><div class="line">root@controller:/lib/systemd/system<span class="comment"># /etc/init.d/docker restart</span></div><div class="line">[ ok ] Restarting docker (via systemctl): docker.service.</div><div class="line">root@controller:/lib/systemd/system<span class="comment"># systemctl status docker.service</span></div><div class="line">● docker.service - Docker Application Container Engine</div><div class="line">   Loaded: loaded (/lib/systemd/system/docker.service; disabled; vendor preset: enabled)</div><div class="line">   Active: active (running) since Wed 2017-11-15 15:27:25 CST; 10s ago</div><div class="line">     Docs: https://docs.docker.com</div><div class="line"> Main PID: 33476 (dockerd)</div><div class="line">    Tasks: 153</div><div class="line">   Memory: 57.8M</div><div class="line">      CPU: 3.966s</div><div class="line"></div><div class="line">root@controller:/data/harbor<span class="comment"># docker-compose stop</span></div><div class="line">Stopping harbor-jobservice ... <span class="keyword">done</span></div><div class="line">Stopping nginx ... <span class="keyword">done</span></div><div class="line">Stopping harbor-ui ... <span class="keyword">done</span></div><div class="line">Stopping harbor-db ... <span class="keyword">done</span></div><div class="line">Stopping registry ... <span class="keyword">done</span></div><div class="line">Stopping harbor-log ... <span class="keyword">done</span></div><div class="line">root@controller:/data/harbor<span class="comment"># docker-compose start</span></div><div class="line">Starting <span class="built_in">log</span> ... <span class="keyword">done</span></div><div class="line">Starting adminserver ... <span class="keyword">done</span></div><div class="line">Starting registry ... <span class="keyword">done</span></div><div class="line">Starting ui ... <span class="keyword">done</span></div><div class="line">Starting mysql ... <span class="keyword">done</span></div><div class="line">Starting jobservice ... <span class="keyword">done</span></div><div class="line">Starting proxy ... <span class="keyword">done</span></div><div class="line">root@controller:/data/harbor<span class="comment"># docker-compose ps</span></div><div class="line">       Name                     Command               State                                Ports                               </div><div class="line">------------------------------------------------------------------------------------------------------------------------------</div><div class="line">harbor-adminserver   /harbor/harbor_adminserver       Up                                                                       </div><div class="line">harbor-db            docker-entrypoint.sh mysqld      Up      3306/tcp                                                         </div><div class="line">harbor-jobservice    /harbor/harbor_jobservice        Up                                                                       </div><div class="line">harbor-log           /bin/sh -c crond &amp;&amp; rm -f  ...   Up      127.0.0.1:1514-&gt;514/tcp                                          </div><div class="line">harbor-ui            /harbor/harbor_ui                Up                                                                       </div><div class="line">nginx                nginx -g daemon off;             Up      0.0.0.0:443-&gt;443/tcp, 0.0.0.0:4443-&gt;4443/tcp, 0.0.0.0:80-&gt;80/tcp </div><div class="line">registry             /entrypoint.sh serve /etc/ ...   Up      5000/tcp</div></pre></td></tr></table></figure>
+<h4 id="命令行登录"><a href="#命令行登录" class="headerlink" title="命令行登录"></a>命令行登录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">root@controller:/data/harbor<span class="comment"># docker login controller:80</span></div><div class="line">Username (admin): admin        </div><div class="line">Password: </div><div class="line">Login Succeeded</div></pre></td></tr></table></figure>
+<h4 id="往habor仓库push-镜像"><a href="#往habor仓库push-镜像" class="headerlink" title="往habor仓库push 镜像"></a>往habor仓库push 镜像</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">root@controller:/data/harbor<span class="comment"># docker tag  httpd controller:80/zzqproject/myhttpd:v1</span></div><div class="line">root@controller:/data/harbor<span class="comment"># docker push  controller:80/zzqproject/myhttpd:v1</span></div><div class="line">The push refers to a repository [controller:80/zzqproject/myhttpd]</div><div class="line">73ff04cf8df5: Pushed </div><div class="line">e70070ad9b01: Pushed </div><div class="line">10cd1ea92057: Pushed </div><div class="line">b7fac20846c1: Pushed </div><div class="line">5789daa1c37d: Pushed </div><div class="line">aa4c186185aa: Pushed </div><div class="line">5d6cbe0dbcf9: Pushed </div><div class="line">v1: digest: sha256:860090e16f4797126c632c138a4251133ee5af45a569d61c18e1547eddd956c2 size: 1780</div></pre></td></tr></table></figure>
+<h3 id="离线版安装，https-方式-（建议使用该方式，特别是公网环境下）"><a href="#离线版安装，https-方式-（建议使用该方式，特别是公网环境下）" class="headerlink" title="离线版安装，https 方式 （建议使用该方式，特别是公网环境下）"></a>离线版安装，https 方式 （建议使用该方式，特别是公网环境下）</h3><h4 id="自签名证书生成"><a href="#自签名证书生成" class="headerlink" title="自签名证书生成"></a>自签名证书生成</h4><p>注意如果生成自签名证书的host地址是IP，则需要编辑/etc/ssl/openssl.cnf，在[v3_ca]段落内添加。</p>
+<p>Failed to tls handshake with 192.168.252.10 x509: cannot validate certificate for 192.168.252.10 because it doesn’t contain any IP SANs<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">root@controller:~<span class="comment"># cd /root/crt/</span></div><div class="line">root@controller:~/crt<span class="comment"># cat /etc/ssl/openssl.cnf |grep -i subjectAltName</span></div><div class="line">subjectAltName = IP:192.168.252.10</div><div class="line">root@controller:/data/harbor<span class="comment"># openssl genrsa -out private_key.pem 4096</span></div><div class="line">Generating RSA private key, 4096 bit long modulus</div><div class="line">...................................................................................................++</div><div class="line">...........................++</div><div class="line">e is 65537 (0x10001)</div><div class="line">root@controller:/data/harbor<span class="comment"># openssl req -new -x509 -key private_key.pem -out root.crt -days 3650</span></div><div class="line">You are about to be asked to enter information that will be incorporated</div><div class="line">into your certificate request.</div><div class="line">What you are about to enter is what is called a Distinguished Name or a DN.</div><div class="line">There are quite a few fields but you can leave some blank</div><div class="line">For some fields there will be a default value,</div><div class="line">If you enter <span class="string">'.'</span>, the field will be left blank.</div><div class="line">-----</div><div class="line">Country Name (2 letter code) [AU]:CN</div><div class="line">State or Province Name (full name) [Some-State]:guangdong</div><div class="line">Locality Name (eg, city) []:shenzhen</div><div class="line">Organization Name (eg, company) [Internet Widgits Pty Ltd]:zzq</div><div class="line">Organizational Unit Name (eg, section) []:zzq</div><div class="line">Common Name (e.g. server FQDN or YOUR name) []:controller</div><div class="line">Email Address []:zhaoqianzhang@yeah.net</div><div class="line">root@controller:~/crt<span class="comment"># ls -lrt</span></div><div class="line">total 8</div><div class="line">-rw-r--r-- 1 root root 3243 Nov 16 14:48 private_key.pem</div><div class="line">-rw-r--r-- 1 root root 2147 Nov 16 14:48 root.crt</div></pre></td></tr></table></figure></p>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">root@controller:/data/harbor<span class="comment"># cat harbor.cfg </span></div><div class="line"><span class="comment">## Configuration file of Harbor</span></div><div class="line"></div><div class="line"><span class="comment">#The IP address or hostname to access admin UI and registry service.</span></div><div class="line"><span class="comment">#DO NOT use localhost or 127.0.0.1, because Harbor needs to be accessed by external clients.</span></div><div class="line">hostname = controller</div><div class="line"></div><div class="line"><span class="comment">#The protocol for accessing the UI and token/notification service, by default it is http.</span></div><div class="line"><span class="comment">#It can be set to https if ssl is enabled on nginx.</span></div><div class="line">ui_url_protocol = https</div><div class="line"></div><div class="line"><span class="comment">#The password for the root user of mysql db, change this before any production use.</span></div><div class="line">db_password = root123</div><div class="line"></div><div class="line"><span class="comment">#Maximum number of job workers in job service  </span></div><div class="line">max_job_workers = 8</div><div class="line"></div><div class="line"><span class="comment">#Determine whether or not to generate certificate for the registry's token.</span></div><div class="line"><span class="comment">#If the value is on, the prepare script creates new root cert and private key </span></div><div class="line"><span class="comment">#for generating token to access the registry. If the value is off the default key/cert will be used.</span></div><div class="line"><span class="comment">#This flag also controls the creation of the notary signer's cert.</span></div><div class="line">customize_crt = on</div><div class="line"></div><div class="line"><span class="comment">#The path of cert and key files for nginx, they are applied only the protocol is set to https</span></div><div class="line">ssl_cert = /data/cert/server.crt</div><div class="line">ssl_cert_key = /data/cert/server.key</div><div class="line"></div><div class="line"><span class="comment">#The path of secretkey storage</span></div><div class="line">secretkey_path = /data</div><div class="line"></div><div class="line"><span class="comment">#Admiral's url, comment this attribute, or set its value to NA when Harbor is standalone</span></div><div class="line">admiral_url = NA</div><div class="line"></div><div class="line"><span class="comment">#The password of the Clair's postgres database, only effective when Harbor is deployed with Clair.</span></div><div class="line"><span class="comment">#Please update it before deployment, subsequent update will cause Clair's API server and Harbor unable to access Clair's database.</span></div><div class="line">clair_db_password = password</div><div class="line"></div><div class="line"><span class="comment">#NOTES: The properties between BEGIN INITIAL PROPERTIES and END INITIAL PROPERTIES</span></div><div class="line"><span class="comment">#only take effect in the first boot, the subsequent changes of these properties </span></div><div class="line"><span class="comment">#should be performed on web ui</span></div><div class="line"></div><div class="line"><span class="comment">#************************BEGIN INITIAL PROPERTIES************************</span></div><div class="line"></div><div class="line"><span class="comment">#Email account settings for sending out password resetting emails.</span></div><div class="line"></div><div class="line"><span class="comment">#Email server uses the given username and password to authenticate on TLS connections to host and act as identity.</span></div><div class="line"><span class="comment">#Identity left blank to act as username.</span></div><div class="line">email_identity = </div><div class="line"></div><div class="line">email_server = smtp.mydomain.com</div><div class="line">email_server_port = 25</div><div class="line">email_username = sample_admin@mydomain.com</div><div class="line">email_password = abc</div><div class="line">email_from = admin &lt;sample_admin@mydomain.com&gt;</div><div class="line">email_ssl = <span class="literal">false</span></div><div class="line"></div><div class="line"><span class="comment">##The initial password of Harbor admin, only works for the first time when Harbor starts. </span></div><div class="line"><span class="comment">#It has no effect after the first launch of Harbor.</span></div><div class="line"><span class="comment">#Change the admin password from UI after launching Harbor.</span></div><div class="line">harbor_admin_password = Harbor12345</div><div class="line"></div><div class="line"><span class="comment">##By default the auth mode is db_auth, i.e. the credentials are stored in a local database.</span></div><div class="line"><span class="comment">#Set it to ldap_auth if you want to verify a user's credentials against an LDAP server.</span></div><div class="line">auth_mode = db_auth</div><div class="line"></div><div class="line"><span class="comment">#The url for an ldap endpoint.</span></div><div class="line">ldap_url = ldaps://ldap.mydomain.com</div><div class="line"></div><div class="line"><span class="comment">#A user's DN who has the permission to search the LDAP/AD server. </span></div><div class="line"><span class="comment">#If your LDAP/AD server does not support anonymous search, you should configure this DN and ldap_search_pwd.</span></div><div class="line"><span class="comment">#ldap_searchdn = uid=searchuser,ou=people,dc=mydomain,dc=com</span></div><div class="line"></div><div class="line"><span class="comment">#the password of the ldap_searchdn</span></div><div class="line"><span class="comment">#ldap_search_pwd = password</span></div><div class="line"></div><div class="line"><span class="comment">#The base DN from which to look up a user in LDAP/AD</span></div><div class="line">ldap_basedn = ou=people,dc=mydomain,dc=com</div><div class="line"></div><div class="line"><span class="comment">#Search filter for LDAP/AD, make sure the syntax of the filter is correct.</span></div><div class="line"><span class="comment">#ldap_filter = (objectClass=person)</span></div><div class="line"></div><div class="line"><span class="comment"># The attribute used in a search to match a user, it could be uid, cn, email, sAMAccountName or other attributes depending on your LDAP/AD  </span></div><div class="line">ldap_uid = uid </div><div class="line"></div><div class="line"><span class="comment">#the scope to search for users, 1-LDAP_SCOPE_BASE, 2-LDAP_SCOPE_ONELEVEL, 3-LDAP_SCOPE_SUBTREE</span></div><div class="line">ldap_scope = 3 </div><div class="line"></div><div class="line"><span class="comment">#Timeout (in seconds)  when connecting to an LDAP Server. The default value (and most reasonable) is 5 seconds.</span></div><div class="line">ldap_timeout = 5</div><div class="line"></div><div class="line"><span class="comment">#Turn on or off the self-registration feature</span></div><div class="line">self_registration = on</div><div class="line"></div><div class="line"><span class="comment">#The expiration time (in minute) of token created by token service, default is 30 minutes</span></div><div class="line">token_expiration = 30</div><div class="line"></div><div class="line"><span class="comment">#The flag to control what users have permission to create projects</span></div><div class="line"><span class="comment">#The default value "everyone" allows everyone to creates a project. </span></div><div class="line"><span class="comment">#Set to "adminonly" so that only admin user can create project.</span></div><div class="line">project_creation_restriction = everyone</div><div class="line"></div><div class="line"><span class="comment">#Determine whether the job service should verify the ssl cert when it connects to a remote registry.</span></div><div class="line"><span class="comment">#Set this flag to off when the remote registry uses a self-signed or untrusted certificate.</span></div><div class="line">verify_remote_cert = off</div><div class="line"><span class="comment">#************************END INITIAL PROPERTIES************************</span></div><div class="line"><span class="comment">#############</span></div></pre></td></tr></table></figure>
+<h4 id="拷贝自签名证书到相应路径"><a href="#拷贝自签名证书到相应路径" class="headerlink" title="拷贝自签名证书到相应路径"></a>拷贝自签名证书到相应路径</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir -p  /data/cert/</div><div class="line"><span class="built_in">cd</span> /root/crt/</div><div class="line">cp private_key.pem  /data/cert/server.key</div><div class="line">cp root.crt  /data/cert/server.crt</div></pre></td></tr></table></figure>
+<h4 id="harbor安装-（包含clair-镜像漏洞扫描模块）"><a href="#harbor安装-（包含clair-镜像漏洞扫描模块）" class="headerlink" title="harbor安装 （包含clair 镜像漏洞扫描模块）"></a>harbor安装 （包含clair 镜像漏洞扫描模块）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div></pre></td><td class="code"><pre><div class="line">root@controller:/data/harbor<span class="comment"># ll</span></div><div class="line">total 527684</div><div class="line">drwxr-xr-x  4 root root      4096 Nov 16 14:24 ./</div><div class="line">drwxr-xr-x 11 root root      4096 Nov 16 12:57 ../</div><div class="line">drwxr-xr-x  2 root root      4096 Nov 16 11:06 bakyml/</div><div class="line">drwxr-xr-x  4 root root      4096 Nov 16 12:55 common/</div><div class="line">-rw-r--r--  1 root root      1163 Oct 20 16:52 docker-compose.clair.yml</div><div class="line">-rw-r--r--  1 root root      1988 Oct 20 16:52 docker-compose.notary.yml</div><div class="line">-rw-r--r--  1 root root      3191 Oct 20 16:52 docker-compose.yml</div><div class="line">-rw-r--r--  1 root root      4304 Oct 20 16:52 harbor_1_1_0_template</div><div class="line">-rw-r--r--  1 root root      4340 Nov 16 14:24 harbor.cfg</div><div class="line">-rw-r--r--  1 root root 539885476 Oct 20 16:56 harbor.v1.2.2.tar.gz</div><div class="line">-rwxr-xr-x  1 root root      5332 Oct 20 16:52 install.sh*</div><div class="line">-rw-r--r--  1 root root    371640 Oct 20 16:52 LICENSE</div><div class="line">-rw-r--r--  1 root root       482 Oct 20 16:52 NOTICE</div><div class="line">-rwxr-xr-x  1 root root     17592 Oct 20 16:52 prepare*</div><div class="line">-rwxr-xr-x  1 root root      4550 Oct 20 16:52 upgrade*</div><div class="line">root@controller:/data/harbor<span class="comment"># ./prepare --with-clair</span></div><div class="line">Clearing the configuration file: ./common/config/clair/postgres_env</div><div class="line">Clearing the configuration file: ./common/config/clair/config.yaml</div><div class="line">Clearing the configuration file: ./common/config/clair/postgresql-init.d/README.md</div><div class="line">Clearing the configuration file: ./common/config/db/env</div><div class="line">Clearing the configuration file: ./common/config/jobservice/env</div><div class="line">Clearing the configuration file: ./common/config/jobservice/app.conf</div><div class="line">Clearing the configuration file: ./common/config/ui/env</div><div class="line">Clearing the configuration file: ./common/config/ui/private_key.pem</div><div class="line">Clearing the configuration file: ./common/config/ui/app.conf</div><div class="line">Clearing the configuration file: ./common/config/adminserver/env</div><div class="line">Clearing the configuration file: ./common/config/nginx/cert/server.key</div><div class="line">Clearing the configuration file: ./common/config/nginx/cert/server.crt</div><div class="line">Clearing the configuration file: ./common/config/nginx/nginx.conf</div><div class="line">Clearing the configuration file: ./common/config/registry/config.yml</div><div class="line">Clearing the configuration file: ./common/config/registry/root.crt</div><div class="line">loaded secret from file: /data/secretkey</div><div class="line">Generated configuration file: ./common/config/nginx/nginx.conf</div><div class="line">Generated configuration file: ./common/config/adminserver/env</div><div class="line">Generated configuration file: ./common/config/ui/env</div><div class="line">Generated configuration file: ./common/config/registry/config.yml</div><div class="line">Generated configuration file: ./common/config/db/env</div><div class="line">Generated configuration file: ./common/config/jobservice/env</div><div class="line">Generated configuration file: ./common/config/jobservice/app.conf</div><div class="line">Generated configuration file: ./common/config/ui/app.conf</div><div class="line">Generated certificate, key file: ./common/config/ui/private_key.pem, cert file: ./common/config/registry/root.crt</div><div class="line">Copying offline data file <span class="keyword">for</span> clair DB</div><div class="line">Generated configuration file: ./common/config/clair/postgres_env</div><div class="line">Generated configuration file: ./common/config/clair/config.yaml</div><div class="line">The configuration files are ready, please use docker-compose to start the service.</div><div class="line">root@controller:/data/harbor<span class="comment"># ./install.sh --with-clair</span></div><div class="line"></div><div class="line">[Step 0]: checking installation environment ...</div><div class="line"></div><div class="line">Note: docker version: 17.06.1</div><div class="line"></div><div class="line">Note: docker-compose version: 1.8.0</div><div class="line"></div><div class="line">[Step 1]: loading Harbor images ...</div><div class="line">Loaded image: vmware/harbor-ui:v1.2.2</div><div class="line">Loaded image: vmware/notary-photon:server-0.5.0</div><div class="line">Loaded image: vmware/nginx-photon:1.11.13</div><div class="line">Loaded image: vmware/registry:2.6.2-photon</div><div class="line">Loaded image: photon:1.0</div><div class="line">Loaded image: vmware/notary-photon:signer-0.5.0</div><div class="line">Loaded image: vmware/harbor-adminserver:v1.2.2</div><div class="line">Loaded image: vmware/harbor-log:v1.2.2</div><div class="line">Loaded image: vmware/harbor-db:v1.2.2</div><div class="line">Loaded image: vmware/harbor-jobservice:v1.2.2</div><div class="line">Loaded image: vmware/harbor-notary-db:mariadb-10.1.10</div><div class="line">Loaded image: vmware/clair:v2.0.1-photon</div><div class="line">Loaded image: vmware/postgresql:9.6.4-photon</div><div class="line"></div><div class="line"></div><div class="line">[Step 2]: preparing environment ...</div><div class="line">Clearing the configuration file: ./common/config/clair/postgres_env</div><div class="line">Clearing the configuration file: ./common/config/clair/config.yaml</div><div class="line">Clearing the configuration file: ./common/config/clair/postgresql-init.d/README.md</div><div class="line">Clearing the configuration file: ./common/config/db/env</div><div class="line">Clearing the configuration file: ./common/config/jobservice/env</div><div class="line">Clearing the configuration file: ./common/config/jobservice/app.conf</div><div class="line">Clearing the configuration file: ./common/config/ui/env</div><div class="line">Clearing the configuration file: ./common/config/ui/private_key.pem</div><div class="line">Clearing the configuration file: ./common/config/ui/app.conf</div><div class="line">Clearing the configuration file: ./common/config/adminserver/env</div><div class="line">Clearing the configuration file: ./common/config/nginx/cert/server.key</div><div class="line">Clearing the configuration file: ./common/config/nginx/cert/server.crt</div><div class="line">Clearing the configuration file: ./common/config/nginx/nginx.conf</div><div class="line">Clearing the configuration file: ./common/config/registry/config.yml</div><div class="line">Clearing the configuration file: ./common/config/registry/root.crt</div><div class="line">loaded secret from file: /data/secretkey</div><div class="line">Generated configuration file: ./common/config/nginx/nginx.conf</div><div class="line">Generated configuration file: ./common/config/adminserver/env</div><div class="line">Generated configuration file: ./common/config/ui/env</div><div class="line">Generated configuration file: ./common/config/registry/config.yml</div><div class="line">Generated configuration file: ./common/config/db/env</div><div class="line">Generated configuration file: ./common/config/jobservice/env</div><div class="line">Generated configuration file: ./common/config/jobservice/app.conf</div><div class="line">Generated configuration file: ./common/config/ui/app.conf</div><div class="line">Generated certificate, key file: ./common/config/ui/private_key.pem, cert file: ./common/config/registry/root.crt</div><div class="line">Copying offline data file <span class="keyword">for</span> clair DB</div><div class="line">Generated configuration file: ./common/config/clair/postgres_env</div><div class="line">Generated configuration file: ./common/config/clair/config.yaml</div><div class="line">The configuration files are ready, please use docker-compose to start the service.</div><div class="line"></div><div class="line"></div><div class="line">[Step 3]: checking existing instance of Harbor ...</div><div class="line"></div><div class="line">Note: stopping existing Harbor instance ...</div><div class="line">Stopping harbor-jobservice ... <span class="keyword">done</span></div><div class="line">Stopping nginx ... <span class="keyword">done</span></div><div class="line">Stopping harbor-ui ... <span class="keyword">done</span></div><div class="line">Stopping clair ... <span class="keyword">done</span></div><div class="line">Stopping harbor-adminserver ... <span class="keyword">done</span></div><div class="line">Stopping clair-db ... <span class="keyword">done</span></div><div class="line">Stopping registry ... <span class="keyword">done</span></div><div class="line">Stopping harbor-db ... <span class="keyword">done</span></div><div class="line">Stopping harbor-log ... <span class="keyword">done</span></div><div class="line">Removing harbor-jobservice ... <span class="keyword">done</span></div><div class="line">Removing nginx ... <span class="keyword">done</span></div><div class="line">Removing harbor-ui ... <span class="keyword">done</span></div><div class="line">Removing clair ... <span class="keyword">done</span></div><div class="line">Removing harbor-adminserver ... <span class="keyword">done</span></div><div class="line">Removing clair-db ... <span class="keyword">done</span></div><div class="line">Removing registry ... <span class="keyword">done</span></div><div class="line">Removing harbor-db ... <span class="keyword">done</span></div><div class="line">Removing harbor-log ... <span class="keyword">done</span></div><div class="line">Removing network harbor_harbor</div><div class="line">Removing network harbor_harbor-clair</div><div class="line"></div><div class="line"></div><div class="line">[Step 4]: starting Harbor ...</div><div class="line">WARNING: The Docker Engine you<span class="string">'re using is running in swarm mode.</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Compose does not use swarm mode to deploy services to multiple nodes in a swarm. All containers will be scheduled on the current node.</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">To deploy your application across the swarm, use the bundle feature of the Docker experimental build.</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">More info:</span></div><div class="line"><span class="string">https://docs.docker.com/compose/bundles</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Creating network "harbor_harbor" with the default driver</span></div><div class="line"><span class="string">Creating network "harbor_harbor-clair" with the default driver</span></div><div class="line"><span class="string">Creating harbor-log</span></div><div class="line"><span class="string">Creating registry</span></div><div class="line"><span class="string">Creating harbor-db</span></div><div class="line"><span class="string">Creating harbor-adminserver</span></div><div class="line"><span class="string">Creating clair-db</span></div><div class="line"><span class="string">Creating clair</span></div><div class="line"><span class="string">Creating harbor-ui</span></div><div class="line"><span class="string">Creating harbor-jobservice</span></div><div class="line"><span class="string">Creating nginx</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">✔ ----Harbor has been installed and started successfully.----</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Now you should be able to visit the admin portal at https://controller. </span></div><div class="line"><span class="string">For more details, please visit https://github.com/vmware/harbor .</span></div></pre></td></tr></table></figure>
+<h4 id="命令行登录-ubuntu16-04-harbor-本机"><a href="#命令行登录-ubuntu16-04-harbor-本机" class="headerlink" title="命令行登录(ubuntu16.04  harbor 本机)"></a>命令行登录(ubuntu16.04  harbor 本机)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">root@controller:/data/harbor<span class="comment"># cat /etc/docker/daemon.json</span></div><div class="line">&#123;<span class="string">"registry-mirrors"</span>: [<span class="string">"http://8b3fddac.m.daocloud.io"</span>],</div><div class="line"><span class="string">"insecure-registries"</span> : [<span class="string">"controller"</span>],</div><div class="line"><span class="string">"insecure-registries"</span> : [<span class="string">"192.168.252.10"</span>]</div><div class="line">&#125;</div><div class="line">systemctl restart docker.service</div><div class="line">root@controller:/data/harbor<span class="comment"># docker login  192.168.252.10 </span></div><div class="line">Username (admin): admin</div><div class="line">Password: </div><div class="line">Login Succeeded</div></pre></td></tr></table></figure>
+<h4 id="命令行登录-centos7-4-client-客户端"><a href="#命令行登录-centos7-4-client-客户端" class="headerlink" title="命令行登录(centos7.4   client 客户端)"></a>命令行登录(centos7.4   client 客户端)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@docker_host ~]<span class="comment"># cat /usr/lib/systemd/system/docker.service |grep insecure</span></div><div class="line">ExecStart=/usr/bin/dockerd --insecure-registry 192.168.252.10</div><div class="line">[root@docker_host ~]<span class="comment"># systemctl  restart docker</span></div><div class="line">[root@docker_host ~]<span class="comment"># docker login  192.168.252.10</span></div><div class="line">Username (admin): admin</div><div class="line">Password: </div><div class="line">Login Succeeded</div></pre></td></tr></table></figure>
+<h4 id="解决域名登陆失败"><a href="#解决域名登陆失败" class="headerlink" title="解决域名登陆失败"></a>解决域名登陆失败</h4><p>1、证书不匹配，注意在生成证书crt时Common Name 要使用FQDN（也就是harbor host的域名即域名）<br><a href="https://docs.docker.com/registry/insecure/#use-self-signed-certificates" target="_blank" rel="external">https://docs.docker.com/registry/insecure/#use-self-signed-certificates</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@docker_host ~]<span class="comment"># cat /etc/hosts</span></div><div class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</div><div class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</div><div class="line">192.168.252.10 controller</div><div class="line">[root@docker_host ~]<span class="comment"># docker login  controller</span></div><div class="line">Username: admin</div><div class="line">Password: </div><div class="line">Error response from daemon: Get https://controller/v2/: x509: certificate is valid <span class="keyword">for</span> zhangzhaoqian, not controller</div></pre></td></tr></table></figure>
+<p>2、证书不是认证的机构颁发的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@docker_host ~]<span class="comment"># docker login  controller</span></div><div class="line">Username: admin</div><div class="line">Password: </div><div class="line">Error response from daemon: Get https://controller/v2/: x509: certificate signed by unknown authority</div></pre></td></tr></table></figure></p>
+<h5 id="命令行登录-centos7-4-client-客户端-支持域名和ip都行"><a href="#命令行登录-centos7-4-client-客户端-支持域名和ip都行" class="headerlink" title="命令行登录(centos7.4   client 客户端),支持域名和ip都行"></a>命令行登录(centos7.4   client 客户端),支持域名和ip都行</h5><p>多个不验证仓库格式：  –insecure-registry IP1:PORT –insecure-registry IP2:PORT –insecure-registry IP3:PORT<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@docker_host ~]<span class="comment"># cat /etc/hosts</span></div><div class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</div><div class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</div><div class="line">192.168.252.10 controller</div><div class="line">[root@docker_host ~]<span class="comment"># cat /usr/lib/systemd/system/docker.service |grep -i insecure</span></div><div class="line">ExecStart=/usr/bin/dockerd --insecure-registry controller --insecure-registry 192.168.252.10</div><div class="line">[root@docker_host ~]<span class="comment"># systemctl  restart docker</span></div><div class="line">Warning: docker.service changed on disk. Run <span class="string">'systemctl daemon-reload'</span> to reload units.</div><div class="line">[root@docker_host ~]<span class="comment"># systemctl daemon-reload</span></div><div class="line">[root@docker_host ~]<span class="comment"># systemctl  restart docker</span></div><div class="line">[root@docker_host ~]<span class="comment"># docker login 192.168.252.10</span></div><div class="line">Username (admin): admin</div><div class="line">Password: </div><div class="line">Login Succeeded</div><div class="line">[root@docker_host ~]<span class="comment"># docker login controller</span></div><div class="line">Username (admin): admin</div><div class="line">Password: </div><div class="line">Login Succeeded</div></pre></td></tr></table></figure></p>
+<h5 id="命令行登录-ubuntu16-04-harbor-本机-1"><a href="#命令行登录-ubuntu16-04-harbor-本机-1" class="headerlink" title="命令行登录(ubuntu16.04  harbor 本机)"></a>命令行登录(ubuntu16.04  harbor 本机)</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">root@controller:/data/harbor<span class="comment"># docker-compose -f  docker-compose.yml  -f docker-compose.clair.yml  stop</span></div><div class="line">Stopping harbor-jobservice ... <span class="keyword">done</span></div><div class="line">Stopping nginx ... <span class="keyword">done</span></div><div class="line">Stopping harbor-ui ... <span class="keyword">done</span></div><div class="line">Stopping clair ... <span class="keyword">done</span></div><div class="line">Stopping harbor-adminserver ... <span class="keyword">done</span></div><div class="line">Stopping clair-db ... <span class="keyword">done</span></div><div class="line">Stopping registry ... <span class="keyword">done</span></div><div class="line">Stopping harbor-db ... <span class="keyword">done</span></div><div class="line">Stopping harbor-log ... <span class="keyword">done</span></div><div class="line">root@controller:/etc/docker/certs.d/controller<span class="comment"># cat /etc/docker/daemon.json</span></div><div class="line">&#123;<span class="string">"registry-mirrors"</span>: [<span class="string">"http://8b3fddac.m.daocloud.io"</span>],</div><div class="line"><span class="string">"insecure-registries"</span> : [<span class="string">"controller"</span>],</div><div class="line"><span class="string">"insecure-registries"</span> : [<span class="string">"192.168.252.10"</span>]</div><div class="line">&#125;</div><div class="line">root@controller:/etc/docker/certs.d/controller<span class="comment"># /etc/init.d/docker restart</span></div><div class="line">[ ok ] Restarting docker (via systemctl): docker.service.</div><div class="line">root@controller:/data/harbor<span class="comment"># docker-compose -f  docker-compose.yml  -f docker-compose.clair.yml  start</span></div><div class="line">Starting <span class="built_in">log</span> ... <span class="keyword">done</span></div><div class="line">Starting adminserver ... <span class="keyword">done</span></div><div class="line">Starting mysql ... <span class="keyword">done</span></div><div class="line">Starting registry ... <span class="keyword">done</span></div><div class="line">Starting ui ... <span class="keyword">done</span></div><div class="line">Starting jobservice ... <span class="keyword">done</span></div><div class="line">Starting proxy ... <span class="keyword">done</span></div><div class="line">Starting postgres ... <span class="keyword">done</span></div><div class="line">Starting clair ... <span class="keyword">done</span></div><div class="line">root@controller:/etc/docker/certs.d/controller<span class="comment"># docker login controller</span></div><div class="line">Username (admin): admin</div><div class="line">Password: </div><div class="line">Login Succeeded</div><div class="line">root@controller:/etc/docker/certs.d/controller<span class="comment"># docker login 192.168.252.10</span></div><div class="line">Username (admin): admin</div><div class="line">Password: </div><div class="line">Login Succeeded</div></pre></td></tr></table></figure>
+<h3 id="同步配置"><a href="#同步配置" class="headerlink" title="同步配置"></a>同步配置</h3><p>master主：  controller  192.168.252.10<br>slave从：  docker_host 192.168.252.20</p>
+<p>主，刚刚已经搭建好了，https方式。<br>从，使用http参照前面。</p>
+<h4 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h4><p>master 登录首页<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-loginbefore.png" alt=""></p>
+<p>master 镜像扫描<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-clair.png" alt=""></p>
+<p>master 新建复制目标<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure.png" alt=""><br>master 新建复制规则<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-1.png" alt=""></p>
+<p><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-2.png" alt=""><br>master 同步镜像到slave 记录<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-3.png" alt=""><br>slave 在复制规则建立前<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-slave-before.png" alt=""><br>slave 自动同步成功<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-slave-autocopy.png" alt=""></p>
+<p>slave http 方式wireshark 抓包，可以看到镜像等信息，不够安全。<br><img src="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls.png" alt=""></p>
+<p><a href="http://oy2fglccv.bkt.clouddn.com/harborwithtsl.pcapng" target="_blank" rel="external">harborwithtsl.pcapng</a><br><a href="http://oy2fglccv.bkt.clouddn.com/harbor-http.pcapng" target="_blank" rel="external">harbor-http.pcapng</a></p>
+
+      
+    </div>
+    
+    
+    
+<div>
+  
+     <div>
+    
+        <div style="text-align:center;color: #ccc;heart:32px;">----纸上得来终觉浅<i class="fa fa-heart"></i>绝知此事要躬行----</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>最好的赞赏是您的阅读！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="上官云涯 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    上官云涯
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://shanguanyunya.github.io/2017/11/16/harbor/" title="harbor 搭建">https://shanguanyunya.github.io/2017/11/16/harbor/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/云平台技术/" rel="tag"><i class="fa fa-tag"></i> 云平台技术</a>
+          
+            <a href="/tags/harbor/" rel="tag"><i class="fa fa-tag"></i> harbor</a>
+          
+            <a href="/tags/容器仓库/" rel="tag"><i class="fa fa-tag"></i> 容器仓库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/docker-begin-5/" rel="next" title="docker 容器入门（五）">
+                <i class="fa fa-chevron-left"></i> docker 容器入门（五）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="上官云涯" />
+            
+              <p class="site-author-name" itemprop="name">上官云涯</p>
+              <p class="site-description motion-element" itemprop="description">办法总比问题多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/shanguanyunya" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zhaoqianzhang@yeah.net" target="_blank" title="邮箱">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>邮箱</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.sina.com.cn/shangguanyunya/" title="我的新浪博客" target="_blank">我的新浪博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://chenqifeng28.github.io/" title="qifeng's blog" target="_blank">qifeng's blog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面的话"><span class="nav-number">1.</span> <span class="nav-text">写在前面的话</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#每篇一句"><span class="nav-number">1.1.</span> <span class="nav-text">每篇一句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#harbor搭建"><span class="nav-number">2.</span> <span class="nav-text">harbor搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#离线版安装，http"><span class="nav-number">2.1.</span> <span class="nav-text">离线版安装，http</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本要求"><span class="nav-number">2.1.1.</span> <span class="nav-text">基本要求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装过程"><span class="nav-number">2.1.2.</span> <span class="nav-text">安装过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令行登录"><span class="nav-number">2.1.3.</span> <span class="nav-text">命令行登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#往habor仓库push-镜像"><span class="nav-number">2.1.4.</span> <span class="nav-text">往habor仓库push 镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离线版安装，https-方式-（建议使用该方式，特别是公网环境下）"><span class="nav-number">2.2.</span> <span class="nav-text">离线版安装，https 方式 （建议使用该方式，特别是公网环境下）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自签名证书生成"><span class="nav-number">2.2.1.</span> <span class="nav-text">自签名证书生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">2.2.2.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拷贝自签名证书到相应路径"><span class="nav-number">2.2.3.</span> <span class="nav-text">拷贝自签名证书到相应路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#harbor安装-（包含clair-镜像漏洞扫描模块）"><span class="nav-number">2.2.4.</span> <span class="nav-text">harbor安装 （包含clair 镜像漏洞扫描模块）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令行登录-ubuntu16-04-harbor-本机"><span class="nav-number">2.2.5.</span> <span class="nav-text">命令行登录(ubuntu16.04  harbor 本机)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令行登录-centos7-4-client-客户端"><span class="nav-number">2.2.6.</span> <span class="nav-text">命令行登录(centos7.4   client 客户端)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决域名登陆失败"><span class="nav-number">2.2.7.</span> <span class="nav-text">解决域名登陆失败</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令行登录-centos7-4-client-客户端-支持域名和ip都行"><span class="nav-number">2.2.7.1.</span> <span class="nav-text">命令行登录(centos7.4   client 客户端),支持域名和ip都行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#命令行登录-ubuntu16-04-harbor-本机-1"><span class="nav-number">2.2.7.2.</span> <span class="nav-text">命令行登录(ubuntu16.04  harbor 本机)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步配置"><span class="nav-number">2.3.</span> <span class="nav-text">同步配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#效果图"><span class="nav-number">2.3.1.</span> <span class="nav-text">效果图</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">上官云涯</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">13.5k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 本站总访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      人次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("DvqIeJU4KeBrr04TAJ5QVyB7-gzGzoHsz", "fmugIvgz7n9Vcg0gxLpWD3PJ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
