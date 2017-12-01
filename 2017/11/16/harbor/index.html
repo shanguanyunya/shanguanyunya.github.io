@@ -88,7 +88,8 @@
 <meta property="og:description" content="写在前面的话每篇一句临渊羡鱼，不如退而结网。 harbor搭建harbor githubharbor各发布版本harbor离线安装包harbor-offline-installer-v1.2.2.tgz 离线版安装，http基本要求python  &amp;gt;= 2.7Docker engine &amp;gt;= 1.10Docker Compose &amp;gt;= 1.60 安装过程1234567891011">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-loginbefore.png">
-<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-clair.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-clair-1.png">
+<meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-clair-2.png">
 <meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure.png">
 <meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-1.png">
 <meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-2.png">
@@ -97,7 +98,7 @@
 <meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/harbor-slave-autocopy.png">
 <meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls-1.png">
 <meta property="og:image" content="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls.png">
-<meta property="og:updated_time" content="2017-11-16T16:01:48.000Z">
+<meta property="og:updated_time" content="2017-12-01T15:05:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="harbor 搭建">
 <meta name="twitter:description" content="写在前面的话每篇一句临渊羡鱼，不如退而结网。 harbor搭建harbor githubharbor各发布版本harbor离线安装包harbor-offline-installer-v1.2.2.tgz 离线版安装，http基本要求python  &amp;gt;= 2.7Docker engine &amp;gt;= 1.10Docker Compose &amp;gt;= 1.60 安装过程1234567891011">
@@ -470,7 +471,7 @@
 <h3 id="同步配置"><a href="#同步配置" class="headerlink" title="同步配置"></a>同步配置</h3><p>master主：  controller  192.168.252.10<br>slave从：  docker_host 192.168.252.20</p>
 <p>主，刚刚已经搭建好了，https方式。<br>从，使用http参照前面。</p>
 <h4 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h4><p>master 登录首页<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-loginbefore.png" alt=""></p>
-<p>master 镜像扫描<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-clair.png" alt=""></p>
+<p>master 镜像扫描<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-clair-1.png" alt=""><br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-clair-2.png" alt=""></p>
 <p>master 新建复制目标<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure.png" alt=""><br>master 新建复制规则<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-1.png" alt=""></p>
 <p><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-2.png" alt=""><br>master 同步镜像到slave 记录<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-master-copyconfigure-3.png" alt=""><br>slave 在复制规则建立前<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-slave-before.png" alt=""><br>slave 自动同步成功<br><img src="http://oy2fglccv.bkt.clouddn.com/harbor-slave-autocopy.png" alt=""></p>
 <p>slave http 方式wireshark 抓包，可以看到账号密码、镜像等信息，不安全。<br><img src="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls-1.png" alt=""><br><img src="http://oy2fglccv.bkt.clouddn.com/wireshark_harbor_withou_tls.png" alt=""></p>
@@ -571,6 +572,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/12/01/go-begin-1/" rel="prev" title="go 环境搭建及beego开源框架样例测试">
+                go 环境搭建及beego开源框架样例测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -655,7 +660,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -677,7 +682,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -778,7 +783,7 @@
     
       <span class="post-meta-item-text">本站总字数&#58;</span>
     
-    <span title="本站总字数">13.5k</span>
+    <span title="本站总字数">14.7k</span>
   
 </div>
 
